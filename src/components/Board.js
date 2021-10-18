@@ -3,7 +3,7 @@ import Square from './Square'
 
 
 
-function Board(props) {
+function Board() {
  const [squares,setSquares] = useState(Array(9).fill(null));
  const [xIsNext, setXIsNext] = useState(true);
 
@@ -11,17 +11,25 @@ function Board(props) {
   console.log('hellur!');
    const _squares = squares; 
    _squares[i] = xIsNext ? 'X': 'O';
-   console.log(squares)
+   
     setSquares(_squares);
     setXIsNext(!xIsNext);
  }
  const renderSquare = (i) => {
    return <Square value={squares[i]} onClick={() => {handleClick(i)}}/>;
  }
- const status = 'Next Player X';
+ 
+ const winner = calculateWinner(squares);
+ let status;
+ if (winner) {
+  status = "Winner: "+ winner;
+ } else {
+  status = "Next Player: "+ (setXIsNext ? "X" : "O");
+ }
+
  return (
   <div className="board" >
-   <h1>board</h1>
+   <h1>{status}</h1>
    <div className="board-row">
      {renderSquare(0)}
      {renderSquare(1)}
@@ -42,3 +50,22 @@ function Board(props) {
 }
 
 export default Board
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
