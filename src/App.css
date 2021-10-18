@@ -14,6 +14,9 @@ body {
   padding: 0;
   margin: 0;
 }
+h1 {
+  text-align: center;
+}
 
 .board {
   width: 500px;
@@ -30,8 +33,7 @@ body {
   flex-direction: row;
 }
 .square {
-  flex: 0 0 166px;
-  
+  flex: 33%;
   height: 100%;
   border: 1px solid black;
   cursor: pointer;
